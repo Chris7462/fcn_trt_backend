@@ -98,11 +98,6 @@ public:
    */
   cv::Mat infer(const cv::Mat & image);
 
-  // Utility functions
-  static cv::Mat create_overlay(
-    const cv::Mat & original, const cv::Mat & segmentation,
-    float alpha = 0.5f);
-
 private:
   // Initialization methods
   void initialize_engine(const std::string & engine_path);

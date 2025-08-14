@@ -16,6 +16,8 @@
 #include "fcn_trt_backend/fcn_trt_backend.hpp"
 #undef private
 
+#include "fcn_trt_backend/segmentation_utils.hpp"
+
 
 class FCNTrtBackendTest : public ::testing::Test
 {
@@ -91,7 +93,7 @@ TEST_F(FCNTrtBackendTest, TestBasicInference)
   EXPECT_EQ(segmentation.type(), CV_8UC3);
 
   // Create overlay
-  cv::Mat overlay = segmentor->create_overlay(image, segmentation, 0.5f);
+  cv::Mat overlay = fcn_trt_backend::utils::create_overlay(image, segmentation, 0.5f);
   EXPECT_EQ(overlay.size(), image.size());
   EXPECT_EQ(overlay.type(), CV_8UC3);
 
@@ -201,7 +203,7 @@ TEST_F(FCNTrtBackendTest, TestMultipleImages)
 
     try {
       auto segmentation = segmentor->infer(image);
-      auto overlay = segmentor->create_overlay(image, segmentation);
+      auto overlay = fcn_trt_backend::utils::create_overlay(image, segmentation);
 
       // Save results with image-specific suffix
       std::string suffix = "_" + std::to_string(successful_tests);

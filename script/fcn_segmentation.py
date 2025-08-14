@@ -50,6 +50,7 @@ def create_overlay(original_img, colored_mask, alpha=0.5):
     overlay = (1 - alpha) * original_array + alpha * colored_mask
     return overlay.astype(np.uint8)
 
+
 # === Step 2: Load and preprocess image ===
 img_path = './test/image_000.png'  # Provide the path to your image
 img_pil = Image.open(img_path).convert('RGB')
