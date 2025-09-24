@@ -109,8 +109,8 @@ install(DIRECTORY include/
 
 # Export targets and dependencies
 ament_export_targets(export_${PROJECT_NAME} HAS_LIBRARY_TARGET)
-# No dependencies to export since OpenCV, CUDA, and TensorRT are all private
-# Reminder: ament_export_dependencies(OpenCV CUDAToolkit) - not needed for private deps
+ament_export_dependencies(CUDAToolkit) # downstream need this
+# No dependencies to export since OpenCV and TensorRT are all private
 
 # Export include directories for downstream packages
 ament_export_include_directories(include)

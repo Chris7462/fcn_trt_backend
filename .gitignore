@@ -19,6 +19,7 @@
 *.engine
 *.onnx
 *.png
+*.data
 
 # Ignore build, devel, and logs folder
 build
