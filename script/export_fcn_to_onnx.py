@@ -38,7 +38,7 @@ def export_fcn_model(output_path, input_height, input_width):
             dummy_input,
             output_path,
             export_params=True,
-            opset_version=17,
+            opset_version=18,
             input_names=['input'],
             output_names=['output'],
             dynamic_axes={'input': {0: 'batch_size'}, 'output': {0: 'batch_size'}},
