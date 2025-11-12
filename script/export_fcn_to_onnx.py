@@ -42,6 +42,7 @@ def export_fcn_model(output_path, input_height, input_width):
             input_names=['input'],
             output_names=['output'],
             dynamic_axes={'input': {0: 'batch_size'}, 'output': {0: 'batch_size'}},
+            dynamo=False,
             verbose=True
         )
         print(f'ONNX model saved to: {output_path}')
