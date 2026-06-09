@@ -232,6 +232,8 @@ void FCNTrtBackend::cleanup() noexcept
 
 cv::Mat FCNTrtBackend::infer(const cv::Mat & image)
 {
+  std::lock_guard<std::mutex> lock(infer_mutex_);
+
   // Preprocess directly into GPU memory
   preprocess_image(image, buffers_.device_input, stream_);
 
