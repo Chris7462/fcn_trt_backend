@@ -46,6 +46,7 @@ add_model_generation_dependency(fcn_trt_backend)
 # Target-specific CUDA properties
 set_target_properties(fcn_trt_backend PROPERTIES
   CUDA_SEPARABLE_COMPILATION ON
+  CUDA_RESOLVE_DEVICE_SYMBOLS ON  # Device-link relocatable objects into the static lib so consumers can link it without errors
   CUDA_ARCHITECTURES ${CMAKE_CUDA_ARCHITECTURES}
 )
 
