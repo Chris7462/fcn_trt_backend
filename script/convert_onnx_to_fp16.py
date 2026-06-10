@@ -67,7 +67,7 @@ def main():
 
     # Verify I/O types
     model = onnx.load(args.output)
-    inputs  = [(i.name, i.type.tensor_type.elem_type) for i in model.graph.input]
+    inputs = [(i.name, i.type.tensor_type.elem_type) for i in model.graph.input]
     outputs = [(o.name, o.type.tensor_type.elem_type) for o in model.graph.output]
     print(f'Input  types: {inputs}')   # should be 1 (float32)
     print(f'Output types: {outputs}')  # should be 1 (float32)
