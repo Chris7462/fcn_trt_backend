@@ -38,7 +38,7 @@ add_custom_command(
 add_custom_command(
   OUTPUT ${ONNX_FP16_PATH}
   COMMAND ${PYTHON3_EXECUTABLE} ${CONVERT_SCRIPT_PATH}
-          --input  ${ONNX_PATH}
+          --input ${ONNX_PATH}
           --output ${ONNX_FP16_PATH}
   DEPENDS ${ONNX_PATH} ${CONVERT_SCRIPT_PATH}
   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}

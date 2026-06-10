@@ -2,6 +2,7 @@
 
 // C++ standard library version: This project uses the C++17 standard library.
 #include <memory>
+#include <mutex>
 #include <string>
 #include <vector>
 
@@ -138,7 +139,7 @@ private:
     uchar3 * pinned_output;
     float * device_input; // TensorRT engine input
     float * device_output;  // TensorRT engine output
-    float * device_temp_buffer; // For img proprecessing
+    float * device_temp_buffer; // For img preprocessing
     uchar3 * device_decoded_mask; // Segmentation output
 
     MemoryBuffers()
@@ -149,6 +150,9 @@ private:
 
   // CUDA streams for pipelining
   cudaStream_t stream_;
+
+  // Thread safety
+  mutable std::mutex infer_mutex_;
 };
 
 } // namespace fcn_trt_backend

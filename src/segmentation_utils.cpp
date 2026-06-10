@@ -25,6 +25,6 @@ cv::Mat create_overlay(
   return overlay;
 }
 
-} // namespace segmentation_utils
+} // namespace utils
 
 } // namespace fcn_trt_backend
