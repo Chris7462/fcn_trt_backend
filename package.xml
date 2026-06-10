@@ -2,7 +2,7 @@
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>fcn_trt_backend</name>
-  <version>0.0.0</version>
+  <version>1.0.0</version>
   <description>FCN Segmentation TensorRT Backend</description>
   <maintainer email="chris7462@gmail.com">chris7462</maintainer>
   <license>Apache-2.0</license>

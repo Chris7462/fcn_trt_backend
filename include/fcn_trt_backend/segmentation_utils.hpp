@@ -13,6 +13,6 @@ namespace utils
 cv::Mat create_overlay(
   const cv::Mat & original, const cv::Mat & segmentation, float alpha = 0.5f);
 
-} // namespace segmentation_utils
+} // namespace utils
 
 } // namespace fcn_trt_backend
