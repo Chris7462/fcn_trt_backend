@@ -5,6 +5,12 @@
 #include <cstdint>
 
 
+namespace fcn_trt_backend
+{
+
+namespace internal
+{
+
 namespace config
 {
 // ImageNet normalization constants
@@ -37,3 +43,7 @@ constexpr std::array<std::array<uint8_t, 3>, 21> PASCAL_VOC_COLORMAP = {{
 }};
 
 } // namespace config
+
+} // namespace internal
+
+} // namespace fcn_trt_backend

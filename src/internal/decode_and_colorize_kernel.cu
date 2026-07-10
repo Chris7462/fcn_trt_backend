@@ -1,8 +1,11 @@
-#include "fcn_trt_backend/config.hpp"
-#include "fcn_trt_backend/decode_and_colorize_kernel.hpp"
+#include "internal/config.hpp"
+#include "internal/decode_and_colorize_kernel.cuh"
 
 
 namespace fcn_trt_backend
+{
+
+namespace internal
 {
 
 // Declare constant memory (visible to all kernels in this compilation unit)
@@ -58,5 +61,7 @@ void launch_decode_and_colorize_kernel(
   decode_and_colorize_kernel<<<gridSize, blockSize, 0, stream>>>(
     input_gpu, output_gpu, width, height, num_classes);
 }
+
+} // namespace internal
 
 } // namespace fcn_trt_backend

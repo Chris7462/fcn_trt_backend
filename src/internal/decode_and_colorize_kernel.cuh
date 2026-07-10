@@ -5,6 +5,10 @@
 
 namespace fcn_trt_backend
 {
+
+namespace internal
+{
+
 void initialize_colormap_constants();
 
 /**
@@ -22,5 +26,7 @@ void initialize_colormap_constants();
 void launch_decode_and_colorize_kernel(
   const float * input_gpu, uchar3 * output_gpu, int width, int height, int num_classes,
   cudaStream_t stream);
+
+} // namespace internal
 
 } // namespace fcn_trt_backend
