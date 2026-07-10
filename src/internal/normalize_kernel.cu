@@ -1,8 +1,11 @@
-#include "fcn_trt_backend/config.hpp"
-#include "fcn_trt_backend/normalize_kernel.hpp"
+#include "internal/config.hpp"
+#include "internal/normalize_kernel.cuh"
 
 
 namespace fcn_trt_backend
+{
+
+namespace internal
 {
 
 // Declare constant memory (visible to all kernels in this compilation unit)
@@ -62,5 +65,7 @@ void launch_normalize_kernel(
     input_data, output_data,
     width, height);
 }
+
+} // namespace internal
 
 } // namespace fcn_trt_backend

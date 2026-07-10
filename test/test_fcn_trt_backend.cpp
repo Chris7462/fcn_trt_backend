@@ -30,7 +30,7 @@ protected:
     conf.width = input_width_;
     conf.num_classes = num_classes_;
     conf.warmup_iterations = 2;
-    conf.log_level = fcn_trt_backend::Logger::Severity::kINFO;
+    conf.log_level = fcn_trt_backend::LogLevel::kInfo;
 
     try {
       segmentor = std::make_unique<fcn_trt_backend::FCNTrtBackend>(engine_path_, conf);

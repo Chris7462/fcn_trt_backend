@@ -10,6 +10,9 @@
 namespace fcn_trt_backend
 {
 
+namespace internal
+{
+
 // Custom exception classes
 class TensorRTException : public std::runtime_error
 {
@@ -25,13 +28,19 @@ public:
   : std::runtime_error("CUDA Error: " + message + " (" + cudaGetErrorString(error) + ")") {}
 };
 
+} // namespace internal
+
+} // namespace fcn_trt_backend
+
 // CUDA error checking macro
+// NOTE: Preprocessor macros are not namespace-scoped, so this expands to
+// fcn_trt_backend::internal::CudaException regardless of the namespace
+// context it's invoked from. Kept outside the namespace blocks above since
+// macro definitions conventionally aren't nested.
 #define CUDA_CHECK(call) \
   do { \
     cudaError_t error = call; \
     if (error != cudaSuccess) { \
-      throw CudaException(#call, error); \
+      throw fcn_trt_backend::internal::CudaException(#call, error); \
     } \
   } while(0)
-
-} // namespace fcn_trt_backend

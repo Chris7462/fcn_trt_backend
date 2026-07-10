@@ -40,9 +40,10 @@ include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/ModelGeneration.cmake)
 # Define the library target
 add_library(${PROJECT_NAME} STATIC
   src/fcn_trt_backend.cpp
-  src/normalize_kernel.cu
-  src/decode_and_colorize_kernel.cu
-  src/segmentation_utils.cpp)
+  src/segmentation_utils.cpp
+  src/internal/fcn_trt_backend_impl.cpp
+  src/internal/normalize_kernel.cu
+  src/internal/decode_and_colorize_kernel.cu)
 
 # Add model generation dependency to the library
 add_model_generation_dependency(${PROJECT_NAME})
@@ -59,6 +60,12 @@ target_include_directories(${PROJECT_NAME}
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include>
   PRIVATE
+    # Implementation-only headers under src/internal/. Adding src/ here (not
+    # src/internal/) lets files inside src/internal/ use the quote-include
+    # form "internal/xxx.hpp" consistently, matching how src/fcn_trt_backend.cpp
+    # already resolves "internal/fcn_trt_backend_impl.hpp" relative to its own
+    # directory. Never installed - purely a build-time path.
+    ${CMAKE_CURRENT_SOURCE_DIR}/src
     # Implementation dependencies - not exposed to consumers
     # Note: ${CUDAToolkit_INCLUDE_DIRS} not needed - CUDA::cudart provides includes automatically
     ${TENSORRT_INCLUDE_DIR})
@@ -93,7 +100,7 @@ install(TARGETS ${PROJECT_NAME}
   EXPORT export_${PROJECT_NAME}
   ARCHIVE DESTINATION lib)
 
-# Install header files
+# Install header files (only include/ is ever installed - src/internal/ never ships)
 install(DIRECTORY include/
   DESTINATION include)
 

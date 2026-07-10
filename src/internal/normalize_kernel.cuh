@@ -5,6 +5,10 @@
 
 namespace fcn_trt_backend
 {
+
+namespace internal
+{
+
 void initialize_mean_std_constants();
 
 // Host function wrapper for CUDA kernel
@@ -13,5 +17,7 @@ void launch_normalize_kernel(
   float * output_data,
   int width, int height,
   cudaStream_t stream);
+
+} // namespace internal
 
 } // namespace fcn_trt_backend
