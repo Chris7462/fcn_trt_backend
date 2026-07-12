@@ -17,6 +17,7 @@
 // local headers
 #include "fcn_trt_backend/fcn_trt_backend.hpp"
 #include "internal/trt_logger.hpp"
+#include "internal/cuda_raii.hpp"
 
 // NOTE: This is a private implementation header. It lives under src/internal/
 // and is never installed - it must not be included by any consumer of the
@@ -48,9 +49,6 @@ private:
   void initialize_constants();
   void warmup_engine(const FCNTrtBackend::Config & config);
 
-  // Memory management
-  void cleanup() noexcept;
-
   // Helper methods
   std::vector<uint8_t> load_engine_file(const std::string & engine_path) const;
   void preprocess_image(
@@ -70,24 +68,22 @@ private:
   size_t output_size_ = 0;
   size_t mask_bytes_ = 0;
 
-  // Memory buffers
+  // Memory buffers. Ownership via RAII smart pointers (see cuda_raii.hpp) -
+  // no manual cleanup() bookkeeping needed; destruction order below (and
+  // stream_ declared last) ensures buffers_ is torn down before the stream
+  // that operations on it were queued against.
   struct MemoryBuffers
   {
-    float * pinned_input;
-    uchar3 * pinned_output;
-    float * device_input; // TensorRT engine input
-    float * device_output;  // TensorRT engine output
-    float * device_temp_buffer; // For img preprocessing
-    uchar3 * device_decoded_mask; // Segmentation output
-
-    MemoryBuffers()
-    : pinned_input(nullptr), pinned_output(nullptr),
-      device_input(nullptr), device_output(nullptr),
-      device_temp_buffer(nullptr), device_decoded_mask(nullptr) {}  // Initialize to nullptr
+    internal::HostPtr pinned_input;
+    internal::HostPtr pinned_output;
+    internal::DevPtr device_input;         // TensorRT engine input
+    internal::DevPtr device_output;        // TensorRT engine output
+    internal::DevPtr device_temp_buffer;   // For img preprocessing
+    internal::DevPtr device_decoded_mask;  // Segmentation output
   } buffers_;
 
   // CUDA stream for pipelining
-  cudaStream_t stream_ = nullptr;
+  internal::StreamPtr stream_;
 };
 
 } // namespace fcn_trt_backend
